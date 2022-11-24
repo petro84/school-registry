@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p-inputnumber, .p-inputnumber {
+  width: 100% !important;
+}
+
+input.p-inputmask {
+  width: 100% !important;
+}
+
+input.p-inputtext {
+  width: 100% !important;
+}

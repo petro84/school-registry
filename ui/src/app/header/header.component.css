@@ -1,0 +1,9 @@
+h3 {
+  width: 125px;
+  word-break: break-word;
+}
+
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+}
