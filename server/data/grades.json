@@ -1,0 +1,26 @@
+[
+    {
+        "gradeId": "K",
+        "description": "Kindergarten"
+    },
+    {
+        "gradeId": "1",
+        "description": "1st Grade"
+    },
+    {
+        "gradeId": "2",
+        "description": "2nd Grade"
+    },
+    {
+        "gradeId": "3",
+        "description": "3rd Grade"
+    },
+    {
+        "gradeId": "4",
+        "description": "4th Grade"
+    },
+    {
+        "gradeId": "5",
+        "description": "5th Grade"
+    }
+]
