@@ -1,0 +1,279 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="surface-ground px-4 py-8 md:px-6 lg:px-8">
+    <div class="flex flex-column lg:flex-row">
+      <div class="surface-card p-5 shadow-2 border-round flex-auto">
+        <div class="text-900 font-semibold text-lg mt-3">
+          {{ formType | titlecase }} Info
+        </div>
+        <p-divider></p-divider>
+        <div class="flex gap-5 md:flex-row">
+          <div class="flex flex-column align-items-center">
+            <p-avatar
+              icon="pi pi-user"
+              styleClass="mr-2"
+              size="xlarge"
+              shape="circle"
+            ></p-avatar>
+            <button
+              pButton
+              pRipple
+              class="mt-2 p-button-raised"
+              icon="pi pi-plus"
+              label="Upload"
+            ></button>
+          </div>
+          <div class="formgrid grid w-full">
+            <div
+              class="field col-12 md:col-2 md:col-offset-1"
+              *ngIf="formType === 'teacher'"
+            >
+              <label for="title" class="block font-medium text-900">Title</label>
+              <p-dropdown
+                [options]="titles"
+                placeholder="Select"
+                formControlName="title"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['title'].valid &&
+                    form.controls['title'].touched
+                }"
+              ></p-dropdown>
+              <p-message
+                *ngIf="
+                  !form.controls['title'].valid && form.controls['title'].touched
+                "
+                severity="error"
+                text="Field is required."
+              ></p-message>
+            </div>
+            <div
+              class="field col-12 md:col-4"
+              [ngClass]="{ 'md:col-5 md:col-offset-1': formType === 'student' }"
+            >
+              <label for="firstName" class="block font-medium text-900"
+                >First Name</label
+              >
+              <input
+                pInputText
+                formControlName="firstName"
+                [value]="form.controls['firstName'].value | titlecase"
+                type="text"
+                class="p-inputtext p-component w-full"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['firstName'].valid &&
+                    form.controls['firstName'].touched
+                }"
+              />
+              <p-message
+                *ngIf="
+                  !form.controls['firstName'].valid &&
+                  form.controls['firstName'].touched
+                "
+                severity="error"
+                text="Field is required."
+              ></p-message>
+            </div>
+            <div
+              class="field col-12 md:col-4"
+              [ngClass]="{ 'md:col-5': formType === 'student' }"
+            >
+              <label for="lastName" class="block font-medium text-900"
+                >Last Name</label
+              >
+              <input
+                pInputText
+                formControlName="lastName"
+                [value]="form.controls['lastName'].value | titlecase"
+                type="text"
+                class="p-inputtext p-component w-full"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['lastName'].valid &&
+                    form.controls['lastName'].touched
+                }"
+              />
+              <p-message
+                *ngIf="
+                  !form.controls['lastName'].valid &&
+                  form.controls['lastName'].touched
+                "
+                severity="error"
+                text="Field is required."
+              ></p-message>
+            </div>
+            <div
+              class="field col-12"
+              [ngClass]="{
+                'md:col-4 md:col-offset-3': formType === 'teacher',
+                'md:col-5 md:col-offset-1': formType === 'student'
+              }"
+            >
+              <label for="grade" class="block font-mediumn text-900">Grade</label>
+              <p-dropdown
+                [options]="grades"
+                placeholder="Select"
+                formControlName="grade"
+                optionLabel="description"
+                optionValue="gradeId"
+                [style]="{ width: '100%' }"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['grade'].valid &&
+                    form.controls['grade'].touched
+                }"
+              ></p-dropdown>
+              <p-message
+                *ngIf="
+                  !form.controls['grade'].valid && form.controls['grade'].touched
+                "
+                severity="error"
+                text="Field is required."
+              ></p-message>
+            </div>
+            <div class="field col-12 md:col-4" *ngIf="formType === 'teacher'">
+              <label for="classSize" class="block font-medium text-900"
+                >Class Size</label
+              >
+              <p-inputNumber
+                formControlName="classSize"
+                mode="decimal"
+                [showButtons]="true"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['classSize'].valid &&
+                    form.controls['classSize'].touched
+                }"
+              ></p-inputNumber>
+              <p-message
+                *ngIf="
+                  form.controls['classSize'].touched &&
+                  form.controls['classSize'].hasError('min')
+                "
+                severity="error"
+                text="Value must be > 0"
+              ></p-message>
+              <p-message
+                *ngIf="
+                  form.controls['classSize'].touched &&
+                  form.controls['classSize'].hasError('max')
+                "
+                severity="error"
+                text="Value must be <= 20"
+              ></p-message>
+            </div>
+            <div class="field col-12 md:col-5" *ngIf="formType === 'student'">
+              <label for="teacher" class="block font-medium text-900"
+                >Teacher</label
+              >
+              <input
+                pInputText
+                formControlName="teacher"
+                placeholder="Teacher"
+                type="text"
+                class="p-inputtext p-component"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['teacher'].valid &&
+                    form.controls['teacher'].touched
+                }"
+              />
+              <p-message
+                *ngIf="
+                  !form.controls['teacher'].valid &&
+                  form.controls['teacher'].touched
+                "
+                severity="error"
+                text="Field is Required."
+              ></p-message>
+            </div>
+            <div
+              class="field col-12"
+              [ngClass]="{
+                'md:col-4 md:col-offset-3': formType === 'teacher',
+                'md:col-5 md:col-offset-1': formType === 'student'
+              }"
+            >
+              <label for="phone" class="block font-medium text-900"
+                >Phone #</label
+              >
+              <p-inputMask
+                formControlName="phone"
+                mask="999-999-9999"
+                placeholder="999-999-9999"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['phone'].valid &&
+                    form.controls['phone'].touched
+                }"
+              ></p-inputMask>
+              <p-message
+                *ngIf="
+                  !form.controls['phone'].valid && form.controls['phone'].touched
+                "
+                severity="error"
+                text="Invalid phone #"
+              ></p-message>
+            </div>
+            <div
+              class="field col-12"
+              [ngClass]="{
+                'md:col-4': formType === 'teacher',
+                'md:col-5': formType === 'student'
+              }"
+            >
+              <label for="email" class="block font-medium text-900">Email</label>
+              <input
+                pInputText
+                type="email"
+                formControlName="email"
+                class="p-inputtext p-component"
+                [ngClass]="{
+                  'ng-dirty ng-invalid':
+                    !form.controls['email'].valid &&
+                    form.controls['email'].touched
+                }"
+              />
+              <p-message
+                *ngIf="
+                  !form.controls['email'].valid && form.controls['email'].touched
+                "
+                severity="error"
+                text="Invalid email addr"
+              ></p-message>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-content-center mt-4">
+          <button
+            pButton
+            pRipple
+            label="Save"
+            type="submit"
+            icon="pi pi-check"
+            class="mx-2"
+            [disabled]="form.invalid"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Delete"
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-danger mx-2"
+            (click)="onDelete()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Cancel"
+            type="button"
+            icon="pi pi-times"
+            class="p-button-secondary mx-2"
+            (click)="onCancel()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
