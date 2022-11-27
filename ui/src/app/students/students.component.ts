@@ -52,7 +52,12 @@ export class StudentsComponent implements OnInit {
   openStudentInfo(id: number) {
     const student = this.students.find((s) => s.studentId === id);
     if (student) {
-      this.router.navigate(['/teacher', this.teacher.teacherId, 'student', student.studentId]);
+      this.router.navigate([
+        '/teacher',
+        this.teacher.teacherId,
+        'student',
+        student.studentId,
+      ]);
     } else {
       this.msgSvc.add({
         severity: 'error',

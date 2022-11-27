@@ -42,8 +42,8 @@ export class TeacherStudentFormComponent implements OnInit {
   ) {
     this.gradesSvc.grades().subscribe((grades) => (this.grades = grades));
 
-    this.route.paramMap.subscribe(pm => {
-      this.bypassStudentLoad = !(Boolean)(pm.get('id') && pm.get('sId'));
+    this.route.paramMap.subscribe((pm) => {
+      this.bypassStudentLoad = !Boolean(pm.get('id') && pm.get('sId'));
     });
   }
 
@@ -101,15 +101,12 @@ export class TeacherStudentFormComponent implements OnInit {
   }
 
   setupStudentForm() {
-    this.form.addControl(
-      'teacher',
-      new FormControl(null)
-    );
+    this.form.addControl('teacher', new FormControl(null));
 
     forkJoin({
       student: this.studentsSvc.student().pipe(take(1)),
-      teacher: this.teachersSvc.teacher().pipe(take(1))
-    }).subscribe(data => {
+      teacher: this.teachersSvc.teacher().pipe(take(1)),
+    }).subscribe((data) => {
       if (data.student && data.teacher) {
         this.updateStudentForm(data.student, data.teacher);
       } else if (!this.bypassStudentLoad) {
@@ -121,7 +118,7 @@ export class TeacherStudentFormComponent implements OnInit {
   updateStudentForm(student: Student, teacher: Teacher) {
     const name: string[] = student.studentName.split(' ');
 
-    this.grades.find(g => {
+    this.grades.find((g) => {
       if (g.gradeId === teacher.gradeId) {
         this.currentGrade = g;
       }
@@ -133,7 +130,7 @@ export class TeacherStudentFormComponent implements OnInit {
       phone: student.phone,
       email: student.email,
       teacher: teacher.teacherName,
-      grade: teacher.gradeId
+      grade: teacher.gradeId,
     });
   }
 
@@ -144,7 +141,7 @@ export class TeacherStudentFormComponent implements OnInit {
       if (changedGrade) {
         if (this.currentGrade?.gradeId !== changedGrade.gradeId) {
           this.form.patchValue({
-            teacher: null
+            teacher: null,
           });
         }
       }

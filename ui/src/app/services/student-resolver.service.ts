@@ -18,13 +18,19 @@ export class StudentResolverService implements Resolve<any> {
     private teachersSvc: TeachersService
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<any> {
     const id = route.paramMap.get('id');
     const sId = route.paramMap.get('sId');
 
     return forkJoin({
-      student: this.studentsSvc.getStudent(route.params['id'], route.params['sId']),
-      teacher: this.teachersSvc.getTeacherById(route.params['id'])
+      student: this.studentsSvc.getStudent(
+        route.params['id'],
+        route.params['sId']
+      ),
+      teacher: this.teachersSvc.getTeacherById(route.params['id']),
     }).pipe(catchError(() => of('Student does not exist!')));
   }
 }

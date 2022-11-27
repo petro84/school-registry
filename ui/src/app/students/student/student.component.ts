@@ -79,42 +79,80 @@ export class StudentComponent implements OnInit {
       let teacher = this.getRandomTeacherByGrade(formValues['grade']);
       let sId = this.student?.studentId ? this.student.studentId : 0;
 
-      const createStudent = this.studentsSvc.createStudent(teacher.teacherId, student);
-      const deletePreviousStudent = createStudent.pipe(concatMap(teacher => this.studentsSvc.deleteStudent(this.teacherId, sId)));
+      const createStudent = this.studentsSvc.createStudent(
+        teacher.teacherId,
+        student
+      );
+      const deletePreviousStudent = createStudent.pipe(
+        concatMap((teacher) =>
+          this.studentsSvc.deleteStudent(this.teacherId, sId)
+        )
+      );
 
       deletePreviousStudent.subscribe({
         next: () => {
           let teacherName = teacher.teacherName.split(' ');
-          this.createToastMsg('success', 'Success!', `${student.studentName} has been transfered to ${teacherName[0]} ${teacherName[2]}'s class.`, false);
+          this.createToastMsg(
+            'success',
+            'Success!',
+            `${student.studentName} has been transfered to ${teacherName[0]} ${teacherName[2]}'s class.`,
+            false
+          );
         },
-        error: err => {
-          this.createToastMsg('error', 'Error', `System error, unable to modify ${student.studentName} at this time. Please try again later.`, true);
+        error: (err) => {
+          this.createToastMsg(
+            'error',
+            'Error',
+            `System error, unable to modify ${student.studentName} at this time. Please try again later.`,
+            true
+          );
           console.error(err);
-        }
+        },
       });
     } else {
       this.studentsSvc.updateStudent(this.teacherId, student).subscribe({
-        next: () => this.createToastMsg('success', 'Success!', `${student.studentName} has been updated.`, false),
+        next: () =>
+          this.createToastMsg(
+            'success',
+            'Success!',
+            `${student.studentName} has been updated.`,
+            false
+          ),
         error: (err) => {
-          this.createToastMsg('error', 'Error', `System error, unable to update ${student.studentName} information.`, true);
+          this.createToastMsg(
+            'error',
+            'Error',
+            `System error, unable to update ${student.studentName} information.`,
+            true
+          );
           console.error(err);
         },
-        complete: () => {}
+        complete: () => {},
       });
     }
-
   }
 
   deleteStudent() {
     let sId = this.student?.studentId ? this.student.studentId : 0;
 
     this.studentsSvc.deleteStudent(this.teacherId, sId).subscribe({
-      next: () => this.createToastMsg('success', 'Success!', `${this.student?.studentName} has been removed.`, false),
-      error: err => {
-        this.createToastMsg('error', 'Error', `System error, unable to remove profile for ${this.student?.studentName}. Please try again later.`, true);
+      next: () =>
+        this.createToastMsg(
+          'success',
+          'Success!',
+          `${this.student?.studentName} has been removed.`,
+          false
+        ),
+      error: (err) => {
+        this.createToastMsg(
+          'error',
+          'Error',
+          `System error, unable to remove profile for ${this.student?.studentName}. Please try again later.`,
+          true
+        );
         console.error(err);
       },
-      complete: () => {}
+      complete: () => {},
     });
   }
 

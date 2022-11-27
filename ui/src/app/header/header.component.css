@@ -3,7 +3,10 @@ h3 {
   word-break: break-word;
 }
 
-a, a:visited, a:hover, a:active {
+a,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
   color: inherit;
 }

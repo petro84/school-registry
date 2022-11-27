@@ -14,7 +14,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
 
 @NgModule({
-  declarations: [ ],
+  declarations: [],
   imports: [
     CommonModule,
     ButtonModule,
@@ -27,7 +27,7 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     InputNumberModule,
     InputMaskModule,
-    ToastModule
+    ToastModule,
   ],
   exports: [
     ButtonModule,
@@ -40,7 +40,7 @@ import { ToastModule } from 'primeng/toast';
     InputTextModule,
     InputNumberModule,
     InputMaskModule,
-    ToastModule
-  ]
+    ToastModule,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

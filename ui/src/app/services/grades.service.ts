@@ -5,14 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Grade } from '../models/grade.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GradesService {
-
   private gradesUrl: string = 'http://localhost:8085/api/grades';
   private grades$ = new BehaviorSubject<Grade[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getGrades(): Observable<Grade[]> {
     return this.http.get<Grade[]>(this.gradesUrl);

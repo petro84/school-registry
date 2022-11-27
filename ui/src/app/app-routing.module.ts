@@ -13,14 +13,18 @@ const routes: Routes = [
   { path: 'teachers/:grade', component: TeachersComponent },
   { path: 'teacher', component: TeacherComponent },
   { path: 'teacher/:id', component: TeacherComponent, pathMatch: 'full' },
-  { path: 'teacher/:id/student/:sId', component: StudentComponent, resolve: { resolver: StudentResolverService } },
+  {
+    path: 'teacher/:id/student/:sId',
+    component: StudentComponent,
+    resolve: { resolver: StudentResolverService },
+  },
   { path: 'students/:id', component: StudentsComponent },
   { path: 'student', component: StudentComponent },
-  { path: '**', component: HomeComponent }
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

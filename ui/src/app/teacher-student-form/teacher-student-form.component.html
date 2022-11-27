@@ -27,7 +27,9 @@
               class="field col-12 md:col-2 md:col-offset-1"
               *ngIf="formType === 'teacher'"
             >
-              <label for="title" class="block font-medium text-900">Title</label>
+              <label for="title" class="block font-medium text-900"
+                >Title</label
+              >
               <p-dropdown
                 [options]="titles"
                 placeholder="Select"
@@ -40,7 +42,8 @@
               ></p-dropdown>
               <p-message
                 *ngIf="
-                  !form.controls['title'].valid && form.controls['title'].touched
+                  !form.controls['title'].valid &&
+                  form.controls['title'].touched
                 "
                 severity="error"
                 text="Field is required."
@@ -109,14 +112,16 @@
                 'md:col-5 md:col-offset-1': formType === 'student'
               }"
             >
-              <label for="grade" class="block font-mediumn text-900">Grade</label>
+              <label for="grade" class="block font-mediumn text-900"
+                >Grade</label
+              >
               <p-dropdown
                 [options]="grades"
                 placeholder="Select"
                 formControlName="grade"
                 optionLabel="description"
                 optionValue="gradeId"
-                (onChange) = "resetTeacher($event)"
+                (onChange)="resetTeacher($event)"
                 [style]="{ width: '100%' }"
                 [ngClass]="{
                   'ng-dirty ng-invalid':
@@ -126,7 +131,8 @@
               ></p-dropdown>
               <p-message
                 *ngIf="
-                  !form.controls['grade'].valid && form.controls['grade'].touched
+                  !form.controls['grade'].valid &&
+                  form.controls['grade'].touched
                 "
                 severity="error"
                 text="Field is required."
@@ -211,7 +217,8 @@
               ></p-inputMask>
               <p-message
                 *ngIf="
-                  !form.controls['phone'].valid && form.controls['phone'].touched
+                  !form.controls['phone'].valid &&
+                  form.controls['phone'].touched
                 "
                 severity="error"
                 text="Invalid phone #"
@@ -224,7 +231,9 @@
                 'md:col-5': formType === 'student'
               }"
             >
-              <label for="email" class="block font-medium text-900">Email</label>
+              <label for="email" class="block font-medium text-900"
+                >Email</label
+              >
               <input
                 pInputText
                 type="email"
@@ -238,7 +247,8 @@
               />
               <p-message
                 *ngIf="
-                  !form.controls['email'].valid && form.controls['email'].touched
+                  !form.controls['email'].valid &&
+                  form.controls['email'].touched
                 "
                 severity="error"
                 text="Invalid email addr"

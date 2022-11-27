@@ -25,7 +25,7 @@ import { StudentComponent } from './students/student/student.component';
     TeacherStudentFormComponent,
     TeacherComponent,
     StudentsComponent,
-    StudentComponent
+    StudentComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +35,9 @@ import { StudentComponent } from './students/student/student.component';
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

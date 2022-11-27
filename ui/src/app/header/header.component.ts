@@ -22,19 +22,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private gradesSvc: GradesService) {}
 
   ngOnInit(): void {
-    this.gradeSub = this.gradesSvc
-      .grades()
-      .subscribe((grades) => {
-        this.grades = grades;
-        this.setMenuItems();
-      });
+    this.gradeSub = this.gradesSvc.grades().subscribe((grades) => {
+      this.grades = grades;
+      this.setMenuItems();
+    });
   }
 
   setMenuItems() {
     this.items = [];
     this.grades.forEach((grade) => {
       let mi: MenuItem = {
-        label: grade.description
+        label: grade.description,
       };
       this.items.push(mi);
     });
