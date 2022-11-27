@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { TeacherStudentFormComponent } from './teacher-student-form/teacher-student-form.component';
 import { TeacherComponent } from './teachers/teacher/teacher.component';
+import { StudentsComponent } from './students/students.component';
+import { StudentComponent } from './students/student/student.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TeacherComponent } from './teachers/teacher/teacher.component';
     HomeComponent,
     TeachersComponent,
     TeacherStudentFormComponent,
-    TeacherComponent
+    TeacherComponent,
+    StudentsComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,

@@ -56,4 +56,8 @@ export class TeachersComponent implements OnInit {
       });
     }
   }
+
+  openStudentList(id: number) {
+    this.router.navigate(['/students', id]);
+  }
 }

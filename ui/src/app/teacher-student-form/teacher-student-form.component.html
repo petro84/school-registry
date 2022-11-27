@@ -116,6 +116,7 @@
                 formControlName="grade"
                 optionLabel="description"
                 optionValue="gradeId"
+                (onChange) = "resetTeacher($event)"
                 [style]="{ width: '100%' }"
                 [ngClass]="{
                   'ng-dirty ng-invalid':
@@ -172,6 +173,7 @@
                 placeholder="Teacher"
                 type="text"
                 class="p-inputtext p-component"
+                [readOnly]="true"
                 [ngClass]="{
                   'ng-dirty ng-invalid':
                     !form.controls['teacher'].valid &&

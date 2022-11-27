@@ -68,9 +68,9 @@ function isValidStudent(student) {
 
   if (student.studentName === undefined || student.studentName.trim() === '')
     return 1;
-  if (student.parentPhone === undefined || student.parentPhone.trim() === '')
+  if (student.phone === undefined || student.phone.trim() === '')
     return 2;
-  if (student.parentEmail === undefined || student.parentEmail.trim() === '')
+  if (student.email === undefined || student.email.trim() === '')
     return 3;
 
   return -1;
@@ -291,8 +291,8 @@ app.post('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
   let student = {
     studentId: getNextId('student'),
     studentName: req.body.studentName,
-    parentPhone: req.body.parentPhone,
-    parentEmail: req.body.parentEmail,
+    phone: req.body.phone,
+    email: req.body.email,
   };
 
   console.log('Validating information....');
@@ -336,8 +336,8 @@ app.put('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
   let student = {
     studentId: req.body.studentId,
     studentName: req.body.studentName,
-    parentPhone: req.body.parentPhone,
-    parentEmail: req.body.parentEmail,
+    phone: req.body.phone,
+    email: req.body.email,
   };
 
   console.log('Validating information....');
@@ -365,8 +365,8 @@ app.put('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
     return;
   }
 
-  match.parentEmail = req.body.parentEmail;
-  match.parentPhone = req.body.parentPhone;
+  match.email = req.body.email;
+  match.phone = req.body.phone;
   match.studentName = req.body.studentName;
 
   fs.writeFileSync(__dirname + '/data/teachers.json', JSON.stringify(teachers));

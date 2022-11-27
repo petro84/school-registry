@@ -1,30 +1,50 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin, take } from 'rxjs';
 
 import { Grade } from '../models/grade.model';
+import { Student } from '../models/student.model';
 import { Teacher } from '../models/teacher.model';
 import { GradesService } from '../services/grades.service';
+import { StudentsService } from '../services/students.service';
 import { TeachersService } from '../services/teachers.service';
 
 @Component({
   selector: 'sr-teacher-student-form',
   templateUrl: './teacher-student-form.component.html',
-  styleUrls: ['./teacher-student-form.component.css']
+  styleUrls: ['./teacher-student-form.component.css'],
 })
 export class TeacherStudentFormComponent implements OnInit {
-
   @Input() formType!: string;
   @Output() onSave = new EventEmitter<FormGroup>();
   @Output() onClose = new EventEmitter();
   @Output() onRemove = new EventEmitter();
 
-  form!:  FormGroup;
+  form!: FormGroup;
   grades!: Grade[];
+  bypassStudentLoad!: boolean;
+  currentGrade!: Grade;
 
   titles: string[] = ['Mr.', 'Mrs.', 'Ms.', 'Miss'];
 
-  constructor(private fb: FormBuilder, private gradesSvc: GradesService, private teachersSvc: TeachersService) {
-    this.gradesSvc.grades().subscribe(grades => this.grades = grades);
+  constructor(
+    private fb: FormBuilder,
+    private gradesSvc: GradesService,
+    private teachersSvc: TeachersService,
+    private studentsSvc: StudentsService,
+    private route: ActivatedRoute
+  ) {
+    this.gradesSvc.grades().subscribe((grades) => (this.grades = grades));
+
+    this.route.paramMap.subscribe(pm => {
+      this.bypassStudentLoad = !(Boolean)(pm.get('id') && pm.get('sId'));
+    });
   }
 
   ngOnInit(): void {
@@ -33,7 +53,7 @@ export class TeacherStudentFormComponent implements OnInit {
     if (this.formType === 'teacher') {
       this.setupTeacherForm();
     } else if (this.formType === 'student') {
-      console.log('Future Enhancement');
+      this.setupStudentForm();
     }
   }
 
@@ -50,13 +70,20 @@ export class TeacherStudentFormComponent implements OnInit {
 
   setupTeacherForm() {
     this.form.addControl('title', new FormControl(null, Validators.required));
-    this.form.addControl('classSize', new FormControl(0, [Validators.required, Validators.min(1), Validators.max(20)]));
+    this.form.addControl(
+      'classSize',
+      new FormControl(0, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(20),
+      ])
+    );
 
-    this.teachersSvc.teacher().subscribe(teacher => {
+    this.teachersSvc.teacher().subscribe((teacher) => {
       if (teacher) {
         this.updateTeacherForm(teacher);
       }
-    })
+    });
   }
 
   updateTeacherForm(teacher: Teacher) {
@@ -69,8 +96,59 @@ export class TeacherStudentFormComponent implements OnInit {
       phone: teacher.phone,
       email: teacher.email,
       grade: teacher.gradeId,
-      classSize: teacher.maxClassSize
+      classSize: teacher.maxClassSize,
     });
+  }
+
+  setupStudentForm() {
+    this.form.addControl(
+      'teacher',
+      new FormControl(null)
+    );
+
+    forkJoin({
+      student: this.studentsSvc.student().pipe(take(1)),
+      teacher: this.teachersSvc.teacher().pipe(take(1))
+    }).subscribe(data => {
+      if (data.student && data.teacher) {
+        this.updateStudentForm(data.student, data.teacher);
+      } else if (!this.bypassStudentLoad) {
+        console.error('Either student or teacher is null');
+      }
+    });
+  }
+
+  updateStudentForm(student: Student, teacher: Teacher) {
+    const name: string[] = student.studentName.split(' ');
+
+    this.grades.find(g => {
+      if (g.gradeId === teacher.gradeId) {
+        this.currentGrade = g;
+      }
+    });
+
+    this.form.patchValue({
+      firstName: name[0],
+      lastName: name[1],
+      phone: student.phone,
+      email: student.email,
+      teacher: teacher.teacherName,
+      grade: teacher.gradeId
+    });
+  }
+
+  resetTeacher(event: any) {
+    if (this.formType === 'student') {
+      let changedGrade = <Grade>event;
+
+      if (changedGrade) {
+        if (this.currentGrade?.gradeId !== changedGrade.gradeId) {
+          this.form.patchValue({
+            teacher: null
+          });
+        }
+      }
+    }
   }
 
   onSubmit(formValues: any) {
@@ -84,5 +162,4 @@ export class TeacherStudentFormComponent implements OnInit {
   onDelete() {
     this.onRemove.emit();
   }
-
 }
