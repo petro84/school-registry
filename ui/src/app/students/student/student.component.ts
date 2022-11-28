@@ -132,7 +132,23 @@ export class StudentComponent implements OnInit {
     }
   }
 
+  confirmDelete() {
+    this.msgSvc.clear();
+    this.msgSvc.add({
+      key: 'center',
+      sticky: true,
+      severity: 'warn',
+      summary: 'Delete Student?',
+      detail: `Please confirm that you would like to delete ${this.student?.studentName}`,
+    });
+  }
+
+  deleteCancelled() {
+    this.msgSvc.clear();
+  }
+
   deleteStudent() {
+    this.msgSvc.clear('center');
     let sId = this.student?.studentId ? this.student.studentId : 0;
 
     this.studentsSvc.deleteStudent(this.teacherId, sId).subscribe({

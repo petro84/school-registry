@@ -99,7 +99,24 @@ export class TeacherComponent implements OnInit {
     }
   }
 
+  confirmDelete() {
+    this.msgSvc.clear();
+    this.msgSvc.add({
+      key: 'center',
+      sticky: true,
+      severity: 'warn',
+      summary: 'Delete Teacher?',
+      detail: `Please confirm that you would like to delete ${this.teacher?.teacherName}`,
+    });
+  }
+
+  deleteCancelled() {
+    this.msgSvc.clear();
+  }
+
   deleteTeacher() {
+    this.msgSvc.clear('center');
+    
     if (this.teacher && this.teacherId && this.teacherId === this.teacherId) {
       this.teachersSvc.deleteTeacher(this.teacherId).subscribe({
         next: () =>

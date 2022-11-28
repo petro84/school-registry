@@ -1,7 +1,36 @@
 <p-toast></p-toast>
+<p-toast position="center" key="center">
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column flex-1">
+      <div class="text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{ message.summary }}</h4>
+        <p>{{ message.detail }}</p>
+      </div>
+      <div class="flex justify-content-around my-3">
+        <button
+          pButton
+          pRipple
+          class="p-button-danger"
+          type="button"
+          label="Delete"
+          (click)="deleteStudent()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          class="p-button-secondary"
+          type="button"
+          label="Cancel"
+          (click)="deleteCancelled()"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
 <sr-teacher-student-form
   formType="student"
   (onSave)="save($event)"
   (onClose)="closeForm()"
-  (onRemove)="deleteStudent()"
+  (onRemove)="confirmDelete()"
 ></sr-teacher-student-form>
