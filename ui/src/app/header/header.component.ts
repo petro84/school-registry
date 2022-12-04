@@ -6,6 +6,8 @@ import { faSchool } from '@fortawesome/free-solid-svg-icons/faSchool';
 
 import { Grade } from '../models/grade.model';
 import { GradesService } from '../services/grades.service';
+import { AdminsService } from '../services/admins.service';
+import { Admin } from '../models/admin.model';
 
 @Component({
   selector: 'sr-header',
@@ -16,16 +18,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
   items!: MenuItem[];
   grades!: Grade[];
   gradeSub!: Subscription;
+  showLoginDialog: boolean = false;
+  showSignupDialog: boolean = false;
+  currentAdmin!: Admin;
 
   faSchool = faSchool;
 
-  constructor(private gradesSvc: GradesService) {}
+  constructor(private gradesSvc: GradesService, private adminSvc: AdminsService) {}
 
   ngOnInit(): void {
     this.gradeSub = this.gradesSvc.grades().subscribe((grades) => {
       this.grades = grades;
       this.setMenuItems();
     });
+
+    this.adminSvc.admin.subscribe(user => this.currentAdmin = user);
   }
 
   setMenuItems() {
@@ -36,6 +43,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
       };
       this.items.push(mi);
     });
+  }
+
+  showDialog(action: string) {
+    if (action === 'login') {
+      this.showLoginDialog = true;
+    } else if (action === 'signup') {
+      this.showSignupDialog = true;
+    }
+  }
+
+  closeDialog(action: string) {
+    if (action === 'login') {
+      this.showLoginDialog = false;
+    } else if (action === 'signup') {
+      this.showSignupDialog = false;
+    }
+  }
+
+  logout() {
+    this.adminSvc.logout();
   }
 
   ngOnDestroy(): void {

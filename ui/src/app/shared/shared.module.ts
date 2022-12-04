@@ -12,6 +12,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
   declarations: [],
@@ -28,6 +30,8 @@ import { ToastModule } from 'primeng/toast';
     InputNumberModule,
     InputMaskModule,
     ToastModule,
+    DialogModule,
+    MessagesModule,
   ],
   exports: [
     ButtonModule,
@@ -41,6 +45,8 @@ import { ToastModule } from 'primeng/toast';
     InputNumberModule,
     InputMaskModule,
     ToastModule,
+    DialogModule,
+    MessagesModule,
   ],
 })
 export class SharedModule {}

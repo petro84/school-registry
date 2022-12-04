@@ -37,12 +37,40 @@
       class="p-0 m-0 flex flex-column lg:flex-row lg:align-self-center border-top-1 surface-border lg:border-top-none"
     >
       <button
+        *ngIf="!currentAdmin.name; else loggedIn"
         pButton
         pRipple
         type="button"
         icon="pi pi-lock"
         class="p-button-rounded p-button-outlined p-button-secondary"
+        (click)="showDialog('login')"
       ></button>
     </div>
   </div>
 </div>
+<sr-login
+  [showLoginDialog]="showLoginDialog"
+  (closeDialog)="closeDialog('login')"
+></sr-login>
+<sr-signup
+  [showDialog]="showSignupDialog"
+  (closeDialog)="closeDialog('signup')"
+></sr-signup>
+<ng-template #loggedIn>
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-user-plus"
+    class="p-button-outlined p-button-rounded mr-5"
+    (click)="showDialog('signup')"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-lock-open"
+    class="p-button-outlined p-button-rounded"
+    (click)="logout()"
+  ></button>
+</ng-template>

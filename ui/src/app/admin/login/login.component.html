@@ -1,0 +1,69 @@
+<p-dialog [(visible)]="showLoginDialog" (onHide)="close()">
+  <h3>Admin Login</h3>
+  <h5 class="text-center mt-2">
+    Need to <a (click)="close()">create an account</a>?
+  </h5>
+  <form [formGroup]="userForm" (ngSubmit)="verifyCredentials(userForm.value)">
+    <section class="flex justify-content-center">
+      <div class="flex flex-column">
+        <div class="flex align-items-center my-3">
+          <label for="username" class="mx-3 w-5">Username</label>
+          <input
+            type="text"
+            class="p-inputtext p-component w-7"
+            formControlName="username"
+            name="username"
+          />
+          <p-message
+            *ngIf="
+              !userForm.controls['username'].valid &&
+              userForm.controls['username'].touched
+            "
+            severity="error"
+            text="Field is required"
+          ></p-message>
+        </div>
+        <div class="flex align-items-center my-3">
+          <label for="password" class="mx-3 w-5">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            name="password"
+            class="p-inputtext p-component w-7"
+          />
+          <p-message
+            *ngIf="
+              !userForm.controls['password'].valid &&
+              userForm.controls['password'].touched
+            "
+            severity="error"
+            text="Field is required"
+          ></p-message>
+        </div>
+      </div>
+    </section>
+    <div class="flex justify-content-center my-4">
+      <button
+        pButton
+        pRipple
+        type="submit"
+        label="Login"
+        icon="pi pi-check"
+        class="mx-4"
+        [disabled]="userForm.invalid"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-secondary mx-4"
+        (click)="close()"
+      ></button>
+    </div>
+  </form>
+  <div class="my-5 text-center">
+    <p-messages></p-messages>
+  </div>
+</p-dialog>

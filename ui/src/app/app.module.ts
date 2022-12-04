@@ -15,6 +15,8 @@ import { TeacherStudentFormComponent } from './teacher-student-form/teacher-stud
 import { TeacherComponent } from './teachers/teacher/teacher.component';
 import { StudentsComponent } from './students/students.component';
 import { StudentComponent } from './students/student/student.component';
+import { LoginComponent } from './admin/login/login.component';
+import { SignupComponent } from './admin/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { StudentComponent } from './students/student/student.component';
     TeacherComponent,
     StudentsComponent,
     StudentComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
