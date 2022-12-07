@@ -11,6 +11,7 @@ import { forkJoin, take } from 'rxjs';
 import { Grade } from '../models/grade.model';
 import { Student } from '../models/student.model';
 import { Teacher } from '../models/teacher.model';
+import { AdminsService } from '../services/admins.service';
 import { GradesService } from '../services/grades.service';
 import { StudentsService } from '../services/students.service';
 import { TeachersService } from '../services/teachers.service';
@@ -30,6 +31,7 @@ export class TeacherStudentFormComponent implements OnInit {
   grades!: Grade[];
   bypassStudentLoad!: boolean;
   currentGrade!: Grade;
+  adminLoggedIn: boolean = false;
 
   titles: string[] = ['Mr.', 'Mrs.', 'Ms.', 'Miss'];
 
@@ -38,6 +40,7 @@ export class TeacherStudentFormComponent implements OnInit {
     private gradesSvc: GradesService,
     private teachersSvc: TeachersService,
     private studentsSvc: StudentsService,
+    private adminsSvc: AdminsService,
     private route: ActivatedRoute
   ) {
     this.gradesSvc.grades().subscribe((grades) => (this.grades = grades));
@@ -45,6 +48,8 @@ export class TeacherStudentFormComponent implements OnInit {
     this.route.paramMap.subscribe((pm) => {
       this.bypassStudentLoad = !Boolean(pm.get('id') && pm.get('sId'));
     });
+
+    this.adminsSvc.admin.subscribe(admin => this.adminLoggedIn = !admin.username);
   }
 
   ngOnInit(): void {
@@ -132,6 +137,12 @@ export class TeacherStudentFormComponent implements OnInit {
       teacher: teacher.teacherName,
       grade: teacher.gradeId,
     });
+
+    if (this.adminLoggedIn) {
+      this.form.controls['grade'].disable();
+    } else {
+      this.form.controls['grade'].enable();
+    }
   }
 
   resetTeacher(event: any) {

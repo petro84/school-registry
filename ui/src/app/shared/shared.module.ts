@@ -14,6 +14,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -32,6 +33,7 @@ import { MessagesModule } from 'primeng/messages';
     ToastModule,
     DialogModule,
     MessagesModule,
+    AutoCompleteModule
   ],
   exports: [
     ButtonModule,
@@ -47,6 +49,7 @@ import { MessagesModule } from 'primeng/messages';
     ToastModule,
     DialogModule,
     MessagesModule,
+    AutoCompleteModule
   ],
 })
 export class SharedModule {}

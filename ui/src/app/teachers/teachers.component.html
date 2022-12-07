@@ -53,7 +53,7 @@
                   pRipple
                   type="button"
                   class="p-button-rounded"
-                  (click)="openTeacherInfo(teacher.teacherId)"
+                  (click)="openTeacherInfo(teacher)"
                 >
                   <fa-icon [icon]="faChalkboardTeacher"></fa-icon>
                 </button>
@@ -65,7 +65,7 @@
                   pRipple
                   type="button"
                   class="p-button-rounded"
-                  (click)="openStudentList(teacher.teacherId)"
+                  [routerLink]="['/students', teacher.teacherId]"
                 >
                   <fa-icon [icon]="faBookReader"></fa-icon>
                 </button>
@@ -84,7 +84,7 @@
     </div>
   </section>
   <section class="flex justify-content-center gap-4 mb-4">
-    <button
+    <button *ngIf="!adminLoggedIn"
       pButton
       pRipple
       class="p-button-raised p-button-rounded"

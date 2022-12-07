@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'teachers', component: TeachersComponent },
   { path: 'teachers/:grade', component: TeachersComponent },
+  { path: 'teachers/:id', component: TeachersComponent },
   { path: 'teacher', component: TeacherComponent },
   { path: 'teacher/:id', component: TeacherComponent, pathMatch: 'full' },
   {

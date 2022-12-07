@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { catchError } from 'rxjs';
 
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private msgSvc: MessageService,
-    private adminSvc: AdminsService
+    private adminSvc: AdminsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.adminSvc.admin.next(usr);
           AdminsService.storeAdminLocal(usr);
           this.close();
+          this.router.navigate(['']);
         },
         error: err => {
           if (err.status === 403) {

@@ -36,6 +36,24 @@
     <div
       class="p-0 m-0 flex flex-column lg:flex-row lg:align-self-center border-top-1 surface-border lg:border-top-none"
     >
+      <p-autoComplete
+        placeholder="Teacher"
+        class="mr-4"
+        [(ngModel)]="searchText"
+        [suggestions]="filteredTeachers"
+        (completeMethod)="search($event)"
+        (onSelect)="onSelect($event)"
+        minlength="2"
+        [dropdown]="true"
+        dropdownIcon="pi pi-search"
+      >
+        <ng-template pTemplate="item" let-teacher>
+          <div>
+            <span>{{ teacher.teacherName }}</span> - {{ teacher.gradeId }}
+            <span *ngIf="!teacher.gradeId.includes('K')">Grade</span>
+          </div>
+        </ng-template>
+      </p-autoComplete>
       <button
         *ngIf="!currentAdmin.name; else loggedIn"
         pButton
@@ -62,7 +80,7 @@
     pRipple
     type="button"
     icon="pi pi-user-plus"
-    class="p-button-outlined p-button-rounded mr-5"
+    class="p-button-outlined p-button-rounded mr-4"
     (click)="showDialog('signup')"
   ></button>
   <button

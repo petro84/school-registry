@@ -423,7 +423,7 @@ app.get('/api/admin/isAvailable/:username', (req, res) => {
   let users = fetchContent('admins');
 
   let user = users.find(
-    (u) => u.userName.toLowerCase() === username.toLowerCase()
+    (u) => u.username.toLowerCase() === username.toLowerCase()
   );
 
   let msg;
@@ -433,7 +433,7 @@ app.get('/api/admin/isAvailable/:username', (req, res) => {
     msg = 'NO';
   }
 
-  console.log(`Username available? ${msg}`);
+  console.log(`username available? ${msg}`);
   res.end(msg);
 });
 
@@ -445,7 +445,7 @@ app.post('/api/admin', urlEncodedParser, (req, res) => {
   let users = fetchContent('admins');
 
   let user = users.find(
-    (u) => u.userName.toLowerCase() === req.body.userName.toLowerCase()
+    (u) => u.username.toLowerCase() === req.body.username.toLowerCase()
   );
   if (user != null) {
     console.log('ERROR: username already exists');
@@ -456,7 +456,7 @@ app.post('/api/admin', urlEncodedParser, (req, res) => {
   let admin = {
     id: getNextId('admin'),
     name: req.body.name,
-    userName: req.body.userName,
+    username: req.body.username,
     password: req.body.password,
   };
 
@@ -477,7 +477,7 @@ app.post('/api/admin/login', urlEncodedParser, (req, res) => {
 
   let match = admins.find(
     (admin) =>
-      admin.userName.toLowerCase() === req.body.userName.toLowerCase() &&
+      admin.username.toLowerCase() === req.body.username.toLowerCase() &&
       admin.password.toLowerCase() === req.body.password.toLowerCase()
   );
   if (match == null) {
@@ -489,7 +489,7 @@ app.post('/api/admin/login', urlEncodedParser, (req, res) => {
   let admin = {
     id: match.id,
     name: match.name,
-    userName: match.userName,
+    username: match.username,
   };
 
   console.log(`Login successful for: ${JSON.stringify(admin)}`);

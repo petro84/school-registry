@@ -266,7 +266,7 @@
             class="mx-2"
             [disabled]="form.invalid"
           ></button>
-          <button
+          <button *ngIf="!adminLoggedIn"
             pButton
             pRipple
             label="Delete"
