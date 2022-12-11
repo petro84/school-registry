@@ -189,6 +189,7 @@ app.post('/api/teachers', urlEncodedParser, (req, res) => {
     email: req.body.email,
     maxClassSize: Number(req.body.maxClassSize),
     students: [],
+    avatar: req.body.avatar ? req.body.avatar : null
   };
 
   console.log('Validating information....');
@@ -216,6 +217,7 @@ app.put('/api/teachers', urlEncodedParser, (req, res) => {
   console.log(`BODY --------> ${JSON.stringify(req.body)}`);
 
   let teacher = {
+    avatar: req.body.avatar,
     teacherId: req.body.teacherId,
     teacherName: req.body.teacherName,
     gradeId: req.body.gradeId,
@@ -247,6 +249,7 @@ app.put('/api/teachers', urlEncodedParser, (req, res) => {
   match.gradeId = teacher.gradeId;
   match.phone = teacher.phone;
   match.email = teacher.email;
+  match.avatar = teacher.avatar;
 
   if (Number(teacher.maxClassSize) < match.students.length) {
     res
@@ -293,6 +296,7 @@ app.post('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
     studentName: req.body.studentName,
     phone: req.body.phone,
     email: req.body.email,
+    avatar: req.body.avatar
   };
 
   console.log('Validating information....');
@@ -338,6 +342,7 @@ app.put('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
     studentName: req.body.studentName,
     phone: req.body.phone,
     email: req.body.email,
+    avatar: req.body.avatar
   };
 
   console.log('Validating information....');
@@ -368,6 +373,7 @@ app.put('/api/teachers/:id/students', urlEncodedParser, (req, res) => {
   match.email = req.body.email;
   match.phone = req.body.phone;
   match.studentName = req.body.studentName;
+  match.avatar = req.body.avatar
 
   fs.writeFileSync(__dirname + '/data/teachers.json', JSON.stringify(teachers));
   console.log('Student updated!');

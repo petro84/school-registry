@@ -27,10 +27,13 @@
             <tr>
               <td>
                 <p-avatar
+                  *ngIf="!student.avatar"
                   icon="pi pi-user"
                   size="large"
                   shape="circle"
                 ></p-avatar>
+                <img *ngIf="student.avatar" [src]="student.avatar"
+                style="border-radius: 100%; width: 75px; height: 75px;"/>
               </td>
               <td>{{ student.studentName.split(" ")[0] }}</td>
               <td>{{ student.studentName.split(" ")[1] }}</td>

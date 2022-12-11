@@ -1,6 +1,7 @@
 import { Student } from './student.model';
 
 export interface Teacher {
+  avatar?: string;
   teacherId: number;
   teacherName: string;
   gradeId: string;

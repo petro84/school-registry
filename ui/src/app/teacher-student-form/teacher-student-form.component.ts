@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -31,9 +31,16 @@ export class TeacherStudentFormComponent implements OnInit {
   grades!: Grade[];
   bypassStudentLoad!: boolean;
   currentGrade!: Grade;
+  displayEditor: boolean = false;
   adminLoggedIn: boolean = false;
+  windowWidth!: number;
 
   titles: string[] = ['Mr.', 'Mrs.', 'Ms.', 'Miss'];
+
+  @HostListener('window:resize')
+  onResize() {
+    this.windowWidth = window.innerWidth;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -49,10 +56,13 @@ export class TeacherStudentFormComponent implements OnInit {
       this.bypassStudentLoad = !Boolean(pm.get('id') && pm.get('sId'));
     });
 
-    this.adminsSvc.admin.subscribe(admin => this.adminLoggedIn = !admin.username);
+    this.adminsSvc.admin.subscribe(
+      (admin) => (this.adminLoggedIn = !admin.username)
+    );
   }
 
   ngOnInit(): void {
+    this.windowWidth = window.innerWidth;
     this.createForm();
 
     if (this.formType === 'teacher') {
@@ -102,6 +112,7 @@ export class TeacherStudentFormComponent implements OnInit {
       email: teacher.email,
       grade: teacher.gradeId,
       classSize: teacher.maxClassSize,
+      avatar: teacher.avatar
     });
   }
 
@@ -136,6 +147,7 @@ export class TeacherStudentFormComponent implements OnInit {
       email: student.email,
       teacher: teacher.teacherName,
       grade: teacher.gradeId,
+      avatar: student.avatar
     });
 
     if (this.adminLoggedIn) {
@@ -156,6 +168,14 @@ export class TeacherStudentFormComponent implements OnInit {
           });
         }
       }
+    }
+  }
+
+  updatePic(event: string) {
+    if (event) {
+      this.form.patchValue({
+        avatar: event
+      });
     }
   }
 

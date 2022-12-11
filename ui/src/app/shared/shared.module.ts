@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { AvatarModule } from 'primeng/avatar';
@@ -15,9 +17,13 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TooltipModule } from 'primeng/tooltip';
+import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PhotoEditorComponent
+  ],
   imports: [
     CommonModule,
     ButtonModule,
@@ -33,7 +39,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ToastModule,
     DialogModule,
     MessagesModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    TooltipModule,
+    ImageCropperModule,
   ],
   exports: [
     ButtonModule,
@@ -49,7 +57,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ToastModule,
     DialogModule,
     MessagesModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    TooltipModule,
+    PhotoEditorComponent
   ],
 })
 export class SharedModule {}

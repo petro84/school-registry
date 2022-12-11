@@ -49,6 +49,7 @@ export class StudentComponent implements OnInit {
       studentName: `${formValues['firstName']} ${formValues['lastName']}`,
       phone: formValues['phone'],
       email: formValues['email'],
+      avatar: formValues['avatar'],
     };
 
     if (!this.student) {

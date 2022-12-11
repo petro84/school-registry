@@ -10,7 +10,6 @@ import { TeachersService } from '../../services/teachers.service';
   selector: 'sr-teacher',
   templateUrl: './teacher.component.html',
   styleUrls: ['./teacher.component.css'],
-  providers: [MessageService],
 })
 export class TeacherComponent implements OnInit {
   teacher!: Teacher | null;
@@ -48,6 +47,7 @@ export class TeacherComponent implements OnInit {
 
   save(formValues: any) {
     const teacher: Teacher = {
+      avatar: formValues['avatar'],
       teacherId: this.teacher?.teacherId ? this.teacher.teacherId : 0,
       teacherName: `${formValues['title']} ${formValues['firstName']} ${formValues['lastName']}`,
       gradeId: formValues['grade'],
@@ -116,7 +116,7 @@ export class TeacherComponent implements OnInit {
 
   deleteTeacher() {
     this.msgSvc.clear('center');
-    
+
     if (this.teacher && this.teacherId && this.teacherId === this.teacherId) {
       this.teachersSvc.deleteTeacher(this.teacherId).subscribe({
         next: () =>

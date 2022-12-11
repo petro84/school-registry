@@ -26,10 +26,13 @@
             <tr>
               <td>
                 <p-avatar
+                  *ngIf="!teacher.avatar"
                   icon="pi pi-user"
                   size="large"
                   shape="circle"
                 ></p-avatar>
+                <img *ngIf="teacher.avatar" [src]="teacher.avatar"
+                style="border-radius: 100%; width: 75px; height: 75px;"/>
               </td>
               <td>
                 <span class="p-column-title">Teacher Name</span

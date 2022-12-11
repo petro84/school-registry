@@ -1,0 +1,75 @@
+<p-dialog
+  [(visible)]="displayEditor"
+  header="Edit"
+  [modal]="true"
+  [resizable]="false"
+  [draggable]="false"
+  (onHide)="closeEditor()"
+>
+<div class="grid grid-nogutter">
+    <div class="col-12 text-center">
+        <span pButton pRipple icon="pi pi-user-edit" label="Choose" (click)="file.click()">
+            <input #file type="file" (change)="fileSelected($event)" style="display: none" />
+        </span>
+    </div>
+    <div class="col-12 mt-3">
+        <div class="grid">
+            <ng-container *ngIf="imageChangedEvent; else preview">
+                <ng-container *ngTemplateOutlet="cropper"></ng-container>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-12 mt-5 text-center">
+        <button pButton pRipple pTooltip="Save" icon="pi pi-save" class="mr-3" [disabled]="!croppedImage" (click)="save()"></button>
+        <button pButton pRipple pTooltip="Cancel" icon="pi pi-times" class="p-button-secondary mr-3" (click)="cancel()"></button>
+        <button pButton pRipple pTooltip="Reset" icon="pi pi-trash" class="p-button-danger" (click)="reset()"></button>
+    </div>
+</div>
+<ng-template #cropper>
+    <div class="col-6 text-center">
+        <h3 class="mb-4">Original Image</h3>
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="4 / 4"
+          [resizeToWidth]="150"
+          [resizeToHeight]="150"
+          [onlyScaleDown]="true"
+          [roundCropper]="true"
+          [canvasRotation]="canvasRotation"
+          [transform]="transform"
+          [style.display]="showCropper ? null : 'none'"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (cropperReady)="cropperReady($event)"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+    </div>
+    <ng-container *ngTemplateOutlet="preview"></ng-container>
+</ng-template>
+<ng-template #preview>
+    <div class="col-6 text-center" [ngClass]="{'col-12': !imageChangedEvent}">
+        <h3 class="mb-4">Preview</h3>
+        <img
+          [src]="croppedImage"
+          style="border-radius: 100%"
+          [style.border]="croppedImage ? '1px solid black' : 'none'"
+        />
+        <div class="grid mt-2" *ngIf="imageChangedEvent">
+            <div class="col-12 text-centered my-1">
+                <button pButton pRipple pTooltip="Rotate Left" icon="pi pi-replay" (click)="rotateLeft()" class="mx-2"></button>
+                <button pButton pRipple pTooltip="Rotate Right" icon="pi pi-refresh" (click)="rotateRight()"></button>
+            </div>
+            <div class="col-12 text-centered my-1">
+              <button pButton pRipple pTooltip="Flip Horizontally" icon="pi pi-arrows-h" (click)="flipHorizontal()" class="mx-2"></button>
+              <button pButton pRipple pTooltip="Flip Vertically" icon="pi pi-arrows-v" (click)="flipVertical()"></button>
+            </div>
+            <div class="col-12 text-centered my-1">
+              <button pButton pRipple pTooltip="Zoom In" icon="pi pi-search-plus" (click)="zoomIn()" class="mx-2"></button>
+              <button pButton pRipple pTooltip="Zoom Out" icon="pi pi-search-minus" (click)="zoomOut()"></button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+</p-dialog>
